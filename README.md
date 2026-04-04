@@ -4,11 +4,10 @@
 - 프로토타이핑 가속화 : 아이디어를 빠르게 실체화 하여 UI/UX의 흐름을 먼저 검증하고, 핵심 로직에 집중하기위해 진행
 - 전체 아키텍쳐 조망 : 세세한 문법 구현은 AI에게 맡기되, 컴포넌트간 의존성 및 데이터 흐름과 같은 큰 그림을 설계
 - AI가 잔 코드를 그대로 수용하지 않고 성능이나 유지보수성 측면에서 더 나은 대안을 직접 제시하고 수정.
-  - 
 -- 
 
-라이브 : https://insurance-ai-nu.vercel.app/
-노션 : [바이브 코]https://jang0ha.notion.site/ai-33612b81902a8074b730d2bced9e36c3?source=copy_link] ->
+- 라이브 : https://insurance-ai-nu.vercel.app/
+- 노션 : [이미지 및 정리 페이지 ](https://jang0ha.notion.site/ai-33612b81902a8074b730d2bced9e36c3?source=copy_link])
 <div align="center">
 
 **React 기반 AI 채팅 보험 상담 애플리케이션**
