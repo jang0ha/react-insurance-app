@@ -97,7 +97,7 @@ export default function App() {
         )}
       </div>
       <article className="container">
-        <div style={{ maxHeight: "200px", overflow: "auto" }}>
+        <div style={{ maxHeight: "600px", overflow: "auto" }}>
           {/* 메세지 리스트 */}
           <MessageList messages={messages} status={status} />
         </div>

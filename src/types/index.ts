@@ -46,6 +46,7 @@ export interface ButtonProps extends BaseComponentProps {
   disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
+  style?: React.CSSProperties;
 }
 
 // Input Props

@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
-import { ButtonProps } from '../types';
-import { focusRing, transition } from '../styles/common';
+import styled, { css } from "styled-components";
+import { ButtonProps } from "../types";
+import { focusRing, transition } from "../styles/common";
 
 // Variant styles
 const variantStyles = {
@@ -59,30 +59,33 @@ const variantStyles = {
 // Size styles
 const sizeStyles = {
   sm: css`
-    padding: ${(props) => props.theme.spacing.sm} ${(props) => props.theme.spacing.md};
+    padding: ${(props) => props.theme.spacing.sm}
+      ${(props) => props.theme.spacing.md};
     font-size: ${(props) => props.theme.typography.fontSize.sm};
     border-radius: ${(props) => props.theme.borderRadius.md};
   `,
   md: css`
-    padding: ${(props) => props.theme.spacing.md} ${(props) => props.theme.spacing.lg};
+    padding: ${(props) => props.theme.spacing.md}
+      ${(props) => props.theme.spacing.lg};
     font-size: ${(props) => props.theme.typography.fontSize.base};
     border-radius: ${(props) => props.theme.borderRadius.lg};
   `,
   lg: css`
-    padding: ${(props) => props.theme.spacing.lg} ${(props) => props.theme.spacing.xl};
+    padding: ${(props) => props.theme.spacing.lg}
+      ${(props) => props.theme.spacing.xl};
     font-size: ${(props) => props.theme.typography.fontSize.lg};
     border-radius: ${(props) => props.theme.borderRadius.lg};
   `,
 };
 
 interface StyledButtonProps {
-  $variant: ButtonProps['variant'];
-  $size: ButtonProps['size'];
+  $variant: ButtonProps["variant"];
+  $size: ButtonProps["size"];
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
   ${focusRing}
-  ${transition('all')}
+  ${transition("all")}
 
   font-weight: ${(props) => props.theme.typography.fontWeight.medium};
   white-space: nowrap;
@@ -90,18 +93,19 @@ const StyledButton = styled.button<StyledButtonProps>`
   align-items: center;
   justify-content: center;
 
-  ${(props) => variantStyles[props.$variant || 'primary']}
-  ${(props) => sizeStyles[props.$size || 'md']}
+  ${(props) => variantStyles[props.$variant || "primary"]}
+  ${(props) => sizeStyles[props.$size || "md"]}
 `;
 
 export function Button({
-  variant = 'primary',
-  size = 'md',
+  variant = "primary",
+  size = "md",
   children,
+  style,
   ...props
 }: ButtonProps) {
   return (
-    <StyledButton $variant={variant} $size={size} {...props}>
+    <StyledButton $variant={variant} $size={size} style={style} {...props}>
       {children}
     </StyledButton>
   );
