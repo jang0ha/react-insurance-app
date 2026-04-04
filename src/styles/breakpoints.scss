@@ -1,0 +1,44 @@
+// Responsive Breakpoints
+// Mobile: < 768px (기본)
+// Tablet: 768px - 1023px
+// Desktop: >= 1024px
+
+:root {
+  // Breakpoint Values
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+// Mixin for Media Queries (SCSS only)
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 768px) and (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (min-width: 1536px) {
+    @content;
+  }
+}
