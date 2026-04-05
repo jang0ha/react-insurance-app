@@ -50,7 +50,7 @@ export async function* streamClaudeResponse(
   // Apply rate limiting before making API request
   await waitForRateLimit();
 
-  const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('Gemini API key not found in environment variables');
   }
