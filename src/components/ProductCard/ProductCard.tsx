@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { InsuranceProduct } from '@/types';
+import { Badge } from '@/components/Badge/Badge';
 
 interface ProductCardProps {
   product: InsuranceProduct;
@@ -28,16 +29,10 @@ const Card = styled.article<{ $recommended: boolean }>`
   }
 `;
 
-const Badge = styled.span`
+const BadgeWrapper = styled.div`
   position: absolute;
   top: -8px;
   right: 16px;
-  background: var(--color-primary);
-  color: white;
-  font-size: 0.75rem;
-  padding: 2px 10px;
-  border-radius: 12px;
-  font-weight: 600;
 `;
 
 const Name = styled.h3`
@@ -118,6 +113,11 @@ const SelectButton = styled.button`
   &:active {
     transform: scale(0.98);
   }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 `;
 
 export function ProductCard({ product, onSelect }: ProductCardProps) {
@@ -128,9 +128,11 @@ export function ProductCard({ product, onSelect }: ProductCardProps) {
       aria-label={`${product.name} 보험 상품`}
     >
       {product.badge && (
-        <Badge aria-label={`${product.badge} 상품`}>
-          {product.badge}
-        </Badge>
+        <BadgeWrapper>
+          <Badge variant="primary" size="sm">
+            {product.badge}
+          </Badge>
+        </BadgeWrapper>
       )}
       <div style={{ flex: 1 }}>
         <Name>{product.name}</Name>

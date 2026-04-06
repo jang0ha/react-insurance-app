@@ -1,15 +1,17 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useChat } from "@/hooks/useChat";
+import { useToast } from "@/hooks/useToast";
 import { ProductCarousel } from "@/components/ProductCarousel/ProductCarousel";
 import { MessageList } from "@/components/MessageList/MessageList";
 import { ChatInput } from "@/components/ChatInput/ChatInput";
 import { InsuranceProduct } from "@/types";
 import { Button } from "@/components/Button";
+import { Title } from "@/components/Title";
 
 const INIT_MESSAGE =
   "안녕하세요! 고객 정보를 알려주세요. 먼저 성함과 나이는 어떻게 되나요? (예시: 홍길동 25)";
-const AppContainer = styled.div`
+const AppContainer = styled.main`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -26,18 +28,25 @@ const Header = styled.header`
   box-shadow: var(--shadow-sm);
 `;
 
-const Title = styled.h1`
-  font-size: var(--font-size-2xl);
-  color: var(--color-gray-900);
-  margin: 0;
+const ChatArea = styled.section`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 `;
 
-const ErrorBanner = styled.div`
-  padding: var(--spacing-md);
-  background: #fee2e2;
-  color: #991b1b;
-  border-left: 4px solid var(--color-danger);
-  font-size: var(--font-size-sm);
+const MessageListWrapper = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media (max-width: 767px) {
+    max-height: calc(100vh - 320px);
+  }
+
+  @media (min-width: 768px) {
+    max-height: calc(100vh - 280px);
+  }
 `;
 
 export default function App() {
@@ -50,6 +59,7 @@ export default function App() {
     clearMessages,
     addInitialAIMessage,
   } = useChat();
+  const { error: showErrorToast } = useToast();
   const initializingRef = useRef(false);
 
   // 앱 로드 시 초기 AI 메시지 자동 전송
@@ -64,47 +74,59 @@ export default function App() {
     }
   }, [messages.length, status, addInitialAIMessage]);
 
+  // 에러 발생 시 토스트 표시
+  useEffect(() => {
+    if (error) {
+      showErrorToast(error, 5000);
+    }
+  }, [error]);
+
   const handleProductSelect = (product: InsuranceProduct) => {
     const message = `${product.name}에 대해 알려줘.`;
     sendMessage(message);
   };
 
   return (
-    <AppContainer>
+    <>
       <Header>
         <Title>보험 AI 어시스턴트</Title>
       </Header>
+      <AppContainer>
+        <ProductCarousel onProductSelect={handleProductSelect} />
+        <section
+          style={{
+            background: "#fff",
+            borderBottom: "1px solid var(--color-border)",
+            padding: "var(--spacing-lg)",
+            display: "flex",
+          }}
+          aria-label="채팅 컨트롤"
+        >
+          <Title as="h2">채팅</Title>
+          {messages.length > 1 && (
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={clearMessages}
+              aria-label="채팅 히스토리 삭제"
+              style={{ marginLeft: "auto" }}
+            >
+              RESET
+            </Button>
+          )}
+        </section>
+        <ChatArea aria-label="대화 영역">
+          <MessageListWrapper>
+            <MessageList messages={messages} status={status} />
+          </MessageListWrapper>
+        </ChatArea>
 
-      <ProductCarousel onProductSelect={handleProductSelect} />
-      <div
-        style={{
-          background: "#fff",
-          borderBottom: "1px",
-          padding: "1rem",
-          display: "flex",
-        }}
-      >
-        {messages.length > 1 && (
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={clearMessages}
-            aria-label="채팅 히스토리 삭제"
-            style={{ marginLeft: "auto" }}
-          >
-            RESET
-          </Button>
-        )}
-      </div>
-      <article className="container">
-        <div style={{ maxHeight: "600px", overflow: "auto" }}>
-          {/* 메세지 리스트 */}
-          <MessageList messages={messages} status={status} />
-        </div>
-      </article>
-      {error && <ErrorBanner role="alert">{error}</ErrorBanner>}
-
-      <ChatInput onSend={sendMessage} onStop={stopStreaming} status={status} />
-    </AppContainer>
+        <ChatInput
+          onSend={sendMessage}
+          onStop={stopStreaming}
+          status={status}
+        />
+      </AppContainer>
+    </>
   );
 }

@@ -62,7 +62,7 @@ export function useChat() {
       );
       setStatus('idle');
     }
-  }, [messages, status]);
+  }, []);
 
   const stopStreaming = useCallback(() => {
     abortRef.current?.abort();

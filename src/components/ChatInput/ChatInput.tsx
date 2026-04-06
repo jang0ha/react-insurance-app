@@ -8,7 +8,7 @@ interface ChatInputProps {
   status: ChatStatus;
 }
 
-const Container = styled.div`
+const Container = styled.form`
   padding: var(--spacing-md);
   width:100%;
   background: var(--color-surface);
@@ -43,6 +43,11 @@ const Textarea = styled.textarea`
   &:disabled {
     opacity: 0.6;
   }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 `;
 
 const Button = styled.button`
@@ -71,6 +76,11 @@ const SendButton = styled(Button)`
     opacity: 0.4;
     cursor: not-allowed;
   }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 `;
 
 const StopButton = styled(Button)`
@@ -79,6 +89,11 @@ const StopButton = styled(Button)`
 
   &:hover {
     background: #dc2626;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #dc2626;
+    outline-offset: 2px;
   }
 `;
 
@@ -94,7 +109,7 @@ const SrOnly = styled.span`
   position: absolute;
   width: 1px;
   height: 1px;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   overflow: hidden;
 `;
 
@@ -108,6 +123,11 @@ export function ChatInput({ onSend, onStop, status }: ChatInputProps) {
     onSend(input);
     setInput('');
     textareaRef.current?.focus();
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSend();
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -126,7 +146,7 @@ export function ChatInput({ onSend, onStop, status }: ChatInputProps) {
   };
 
   return (
-    <Container role="form" aria-label="메시지 입력">
+    <Container onSubmit={handleSubmit} aria-label="메시지 입력 폼">
       <InputWrapper>
         <Textarea
           ref={textareaRef}
@@ -153,16 +173,15 @@ export function ChatInput({ onSend, onStop, status }: ChatInputProps) {
           </StopButton>
         ) : (
           <SendButton
-            onClick={handleSend}
             disabled={!input.trim()}
             aria-label="메시지 전송"
-            type="button"
+            type="submit"
           >
             ↑
           </SendButton>
         )}
       </InputWrapper>
-      <Hint>{input.length}/2000</Hint>
+      <Hint aria-live="polite">{input.length}/2000</Hint>
     </Container>
   );
 }

@@ -86,6 +86,18 @@ export interface Toast {
   duration?: number;
 }
 
+// Badge Types
+export type BadgeVariant = 'primary' | 'success' | 'warning' | 'danger' | 'secondary';
+
+// Skeleton Types
+export type SkeletonVariant = 'text' | 'card' | 'message' | 'avatar';
+
+// Common Size Variant
+export type SizeVariant = 'sm' | 'md' | 'lg';
+
+// Common Color Variant
+export type ColorVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+
 // Loading State Types
 export type LoadingState = 'idle' | 'loading' | 'success' | 'error';
 

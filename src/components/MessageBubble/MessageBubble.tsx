@@ -9,7 +9,7 @@ interface MessageBubbleProps {
   isLoading?: boolean;
 }
 
-const Wrapper = styled.div<{ $isUser: boolean }>`
+const Wrapper = styled.li<{ $isUser: boolean }>`
   display: flex;
   align-items: flex-end;
   gap: var(--spacing-sm);
@@ -17,6 +17,7 @@ const Wrapper = styled.div<{ $isUser: boolean }>`
   animation: fadeIn 0.2s ease;
   flex-direction: ${(props) => (props.$isUser ? "row-reverse" : "row")};
   white-space: break-spaces;
+  list-style: none;
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -36,7 +37,7 @@ const Content = styled.div<{ $isUser: boolean }>`
   align-items: ${(props) => (props.$isUser ? "flex-end" : "flex-start")};
 `;
 
-const Bubble = styled.div<{ $isUser: boolean }>`
+const Bubble = styled.article<{ $isUser: boolean }>`
   padding: 10px 14px;
   border-radius: var(--radius-bubble);
   word-break: break-word;
@@ -47,6 +48,11 @@ const Bubble = styled.div<{ $isUser: boolean }>`
     props.$isUser ? "var(--color-user-text)" : "var(--color-ai-text)"};
   border-bottom-right-radius: ${(props) => (props.$isUser ? "4px" : "")};
   border-bottom-left-radius: ${(props) => (!props.$isUser ? "4px" : "")};
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 `;
 
 const Text = styled.p`
@@ -103,8 +109,8 @@ export const MessageBubble = memo(function MessageBubble({
   const showLoading = !isUser && isLastMessage && isLoading;
 
   return (
-    <Wrapper $isUser={isUser} role="listitem">
-      {!isUser && <Avatar aria-hidden="true">AI</Avatar>}
+    <Wrapper $isUser={isUser}>
+      {!isUser && <Avatar aria-label="AI 어시스턴트">AI</Avatar>}
       <Content $isUser={isUser}>
         {showLoading ? (
           <LoadingDots visible={true} />
@@ -112,7 +118,8 @@ export const MessageBubble = memo(function MessageBubble({
           <>
             <Bubble
               $isUser={isUser}
-              aria-label={`${isUser ? "내 메시지" : "AI 응답"}: ${message.content}`}
+              aria-label={`${isUser ? "사용자 메시지" : "AI 응답"}`}
+              tabIndex={0}
             >
               <Text>{message.content}</Text>
               {message.isStreaming && <Cursor aria-hidden="true">▋</Cursor>}
@@ -120,6 +127,7 @@ export const MessageBubble = memo(function MessageBubble({
             <Timestamp
               $isUser={isUser}
               dateTime={message.timestamp.toISOString()}
+              aria-label={`${isUser ? "보낸 시간" : "받은 시간"}: ${timeStr}`}
             >
               {timeStr}
             </Timestamp>

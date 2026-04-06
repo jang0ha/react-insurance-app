@@ -11,9 +11,10 @@ interface MessageListProps {
   status: ChatStatus;
 }
 
-const Container = styled.div`
+const Container = styled.section`
   flex: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
@@ -46,10 +47,11 @@ export function MessageList({ messages, status }: MessageListProps) {
   return (
     <Container
       role="log"
-      aria-label="채팅 메시지"
+      aria-label="대화 기록"
       aria-live="polite"
+      aria-atomic="false"
     >
-      <div role="list">
+      <ol role="list" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
         {messages.map((msg, index) => (
           <MessageBubble
             key={msg.id}
@@ -58,8 +60,8 @@ export function MessageList({ messages, status }: MessageListProps) {
             isLoading={status === 'loading' || status === 'streaming'}
           />
         ))}
-      </div>
-      <div ref={bottomRef} />
+      </ol>
+      <div ref={bottomRef} aria-hidden="true" />
     </Container >
   );
 }

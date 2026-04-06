@@ -72,7 +72,7 @@ export const focusRing = css`
   outline: 2px solid transparent;
   outline-offset: 2px;
 
-  &:focus {
+  &:focus-visible {
     outline: 2px solid;
     outline-color: currentColor;
   }

@@ -12,7 +12,7 @@ const paddingMap = {
   lg: (props: { theme: any }) => props.theme.spacing.xl,
 };
 
-const StyledCard = styled.div<StyledCardProps>`
+const StyledCard = styled.article<StyledCardProps>`
   padding: ${(props) => paddingMap[props.$padding](props)};
   border-radius: ${(props) => props.theme.borderRadius.lg};
   background-color: white;
