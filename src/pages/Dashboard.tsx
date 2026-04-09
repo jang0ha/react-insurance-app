@@ -85,41 +85,44 @@ export default function Dashboard() {
       <Header>
         <Title>보험 AI 어시스턴트</Title>
       </Header>
-      <AppContainer id="main-content" aria-busy={status === "loading" || status === "streaming"}>
+      <AppContainer
+        id="main-content"
+        aria-busy={status === "loading" || status === "streaming"}
+      >
         <ProductCarousel onProductSelect={handleProductSelect} />
-        <section
-          style={{
-            display: "flex",
-            background: "#fff",
-            borderBottom: "1px solid var(--color-border)",
-            padding: "var(--spacing-md) var(--spacing-lg)",
-          }}
-          aria-label="채팅 컨트롤"
-        >
-          <Title as="h2">채팅</Title>
-          {messages.length > 1 && (
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={clearMessages}
-              aria-label="채팅 히스토리 삭제"
-              style={{ marginLeft: "auto" }}
-            >
-              RESET
-            </Button>
-          )}
-        </section>
+
         <ChatArea aria-label="대화 영역">
+          <div
+            style={{
+              display: "flex",
+              background: "#fff",
+              borderBottom: "1px solid var(--color-border)",
+              padding: "var(--spacing-md) var(--spacing-lg)",
+            }}
+            aria-label="채팅 컨트롤"
+          >
+            <Title as="h2">채팅</Title>
+            {messages.length > 1 && (
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={clearMessages}
+                aria-label="채팅 히스토리 삭제"
+                style={{ marginLeft: "auto" }}
+              >
+                RESET
+              </Button>
+            )}
+          </div>
           <MessageListWrapper>
             <MessageList messages={messages} status={status} />
           </MessageListWrapper>
+          <ChatInput
+            onSend={sendMessage}
+            onStop={stopStreaming}
+            status={status}
+          />
         </ChatArea>
-
-        <ChatInput
-          onSend={sendMessage}
-          onStop={stopStreaming}
-          status={status}
-        />
       </AppContainer>
     </>
   );

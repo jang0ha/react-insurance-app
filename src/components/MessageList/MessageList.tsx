@@ -9,7 +9,7 @@ interface MessageListProps {
   status: ChatStatus;
 }
 
-const Container = styled.section`
+const Container = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
