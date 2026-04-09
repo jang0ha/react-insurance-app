@@ -1,12 +1,12 @@
 // Global SCSS
 // Pretendard 폰트 설정 (CDN에서 제공한다고 가정)
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-@import './breakpoints.scss';
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+@import "./breakpoints.scss";
 
 // Swiper Styles (imported from node_modules)
-@import 'swiper/css';
-@import 'swiper/css/navigation';
-@import 'swiper/css/pagination';
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
 
 :root {
   // Colors
@@ -29,15 +29,16 @@
   --color-gray-50: #f9fafb;
 
   // Chat Colors
-  --color-ai-bg: #F3F4F6;
+  --color-ai-bg: #f3f4f6;
   --color-ai-text: #111827;
-  --color-user-text: #FFFFFF;
-  --color-bg: #F9FAFB;
-  --color-surface: #FFFFFF;
-  --color-border: #E5E7EB;
+  --color-user-text: #ffffff;
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+  --color-border: #e5e7eb;
 
   // Typography
-  --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family:
+    "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -83,12 +84,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-html,
-body,
-#root {
-  height: 100%;
 }
 
 body {

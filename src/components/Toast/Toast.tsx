@@ -177,7 +177,12 @@ const CloseButton = styled.button`
 
 function ToastContainer({ toasts, onRemove }: ToastContainerProps) {
   return (
-    <Container role="region" aria-live="polite" aria-label="토스트 알림">
+    <Container
+      role="region"
+      aria-live="polite"
+      aria-atomic="true"
+      aria-label="토스트 알림"
+    >
       {toasts.map((toast) => (
         <ToastItemComponent key={toast.id} toast={toast} onRemove={onRemove} />
       ))}

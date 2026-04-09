@@ -2,6 +2,7 @@
 export { Button } from './Button';
 export { Card } from './Card';
 export { Title } from './Title';
+export { SkipLink } from './SkipLink';
 
 // Chat Components
 export { ChatInput } from './ChatInput/ChatInput';

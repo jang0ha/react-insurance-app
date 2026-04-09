@@ -1,6 +1,6 @@
-import { useState, useRef, KeyboardEvent } from 'react';
-import styled from 'styled-components';
-import { ChatStatus } from '@/types';
+import { useState, useRef, KeyboardEvent } from "react";
+import styled from "styled-components";
+import { ChatStatus } from "@/types";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -10,7 +10,7 @@ interface ChatInputProps {
 
 const Container = styled.form`
   padding: var(--spacing-md);
-  width:100%;
+  width: 100%;
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
 `;
@@ -84,22 +84,27 @@ const SendButton = styled(Button)`
 `;
 
 const StopButton = styled(Button)`
-  background: #ef4444;
+  background: var(--color-danger);
   color: white;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: #dc2626;
   }
 
   &:focus-visible {
-    outline: 2px solid #dc2626;
+    outline: 2px solid var(--color-danger);
     outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `;
 
 const Hint = styled.p`
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--color-gray-600);
   text-align: right;
   margin-top: 4px;
   margin-bottom: 0;
@@ -114,14 +119,14 @@ const SrOnly = styled.span`
 `;
 
 export function ChatInput({ onSend, onStop, status }: ChatInputProps) {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const isActive = status === 'loading' || status === 'streaming';
+  const isActive = status === "loading" || status === "streaming";
 
   const handleSend = () => {
     if (!input.trim() || isActive) return;
     onSend(input);
-    setInput('');
+    setInput("");
     textareaRef.current?.focus();
   };
 
@@ -131,7 +136,7 @@ export function ChatInput({ onSend, onStop, status }: ChatInputProps) {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -141,8 +146,8 @@ export function ChatInput({ onSend, onStop, status }: ChatInputProps) {
     setInput(e.target.value);
     // auto-resize
     const ta = e.target;
-    ta.style.height = 'auto';
-    ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
+    ta.style.height = "auto";
+    ta.style.height = Math.min(ta.scrollHeight, 120) + "px";
   };
 
   return (
@@ -157,18 +162,13 @@ export function ChatInput({ onSend, onStop, status }: ChatInputProps) {
           rows={1}
           maxLength={2000}
           disabled={isActive}
+          title="메시지 입력창"
           aria-label="메시지 입력창"
           aria-describedby="input-hint"
         />
-        <SrOnly id="input-hint">
-          Enter 키로 전송, Shift+Enter로 줄바꿈
-        </SrOnly>
+        <SrOnly id="input-hint">Enter 키로 전송, Shift+Enter로 줄바꿈</SrOnly>
         {isActive ? (
-          <StopButton
-            onClick={onStop}
-            aria-label="AI 응답 중지"
-            type="button"
-          >
+          <StopButton onClick={onStop} aria-label="AI 응답 중지" type="button">
             ■
           </StopButton>
         ) : (
